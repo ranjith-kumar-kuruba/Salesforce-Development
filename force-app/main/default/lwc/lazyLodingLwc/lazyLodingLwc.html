@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title="Lazy Loading LWC" icon-name="custom:custom63">
+        <div class="slds-m-around_medium">
+            <lightning-button label="Load Data" onclick={loadData}></lightning-button>
+            <div class="slds-m-top_medium">
+                <template if:true={accounts}>
+                    <lightning-datatable key-field="id" data={accounts} columns={columns} show-row-number-column
+                        hide-checkbox-column>
+                    </lightning-datatable>
+                </template>
+                <template if:true={error}>
+                    <p>Error while loading accounts: {error}</p>
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+</template>
