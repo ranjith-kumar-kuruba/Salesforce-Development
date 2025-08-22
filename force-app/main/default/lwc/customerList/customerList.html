@@ -1,0 +1,19 @@
+<template>
+
+    <lightning-card variant="Narrow" title="Customer Details" icon-name="custom:custom31">
+        <div class="slds-m-around_medium">
+            <lightning-button variant="brand" label="Load More" title="Load More"
+                onclick={handleLoad}></lightning-button>
+
+            <template for:each={customers} for:item="customer">
+                <div key={customer.Id} class="customer-card">
+                    <h1>{customer.FirstName} {customer.LastName}</h1>
+                    <p class="email">{customer.Email}</p>
+                    <p>{customer.Phone}</p>
+                    <p>{customer.Company}</p>
+                    <p>{customer.Country}</p>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

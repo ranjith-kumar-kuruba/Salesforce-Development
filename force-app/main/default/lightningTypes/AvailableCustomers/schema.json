@@ -1,0 +1,5 @@
+{
+  "title": "Customer Details",
+  "description": "My Customer Response",
+  "lightning:type": "@apexClassType/c__CustomerController$AvailableCustomers"
+}
