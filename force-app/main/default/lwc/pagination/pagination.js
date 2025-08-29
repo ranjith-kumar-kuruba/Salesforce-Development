@@ -13,12 +13,14 @@ export default class Pagination extends LightningElement {
     columns = COLUMNS;
     accounts = [];
     allAccounts = [];
+    filteredAccounts = [];
     error;
     count = 0;
     @wire(getAccounts)
     _wiredAccounts({ data, error }) {
         if (data) {
             this.allAccounts = data;
+            this.filteredAccounts = data;
             this.accounts = data.slice(this.count, this.count + 10);
         } else if (error) {
             this.error = error;
@@ -36,7 +38,7 @@ export default class Pagination extends LightningElement {
     handleNext() {
         // Logic for handling next page
         this.count += 10;
-        this.accounts = this.allAccounts.slice(this.count, this.count + 10);
+        this.accounts = this.filteredAccounts.slice(this.count, this.count + 10);
     }
 
     handlePrevious() {
@@ -45,20 +47,24 @@ export default class Pagination extends LightningElement {
         if (this.count < 0) {
             this.count = 0;
         }
-        this.accounts = this.allAccounts.slice(this.count, this.count + 20);
+        this.accounts = this.filteredAccounts.slice(this.count, this.count + 10);
     }
 
     handleSearch(event) {
         const searchTerm = event.target.value.toLowerCase();
         if (searchTerm.length >= 3) {
-            this.accounts = this.allAccounts.filter(account => {
-                return account.Name.toLowerCase().includes(searchTerm) || (account.Industry && account.Industry.toLowerCase().includes(searchTerm))
+            this.filteredAccounts = this.allAccounts.filter(account => {
+                return (account.Industry && account.Industry.toLowerCase().includes(searchTerm))
             });
+            console.log('Filtered Data:', this.filteredAccounts.length);
+            this.count = 0;
+            this.accounts = this.filteredAccounts.slice(this.count, this.count + 10);
         }
 
         if (searchTerm.length === 0) {
             this.count = 0;
-            this.accounts = this.allAccounts.slice(this.count, this.count + 10);
+            this.filteredAccounts = this.allAccounts;
+            this.accounts = this.filteredAccounts.slice(this.count, this.count + 10);
         }
     }
 }
