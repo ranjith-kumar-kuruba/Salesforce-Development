@@ -1,0 +1,26 @@
+<template>
+    <lightning-card title="Account Pagination" icon-name="standard:account">
+        <div class="slds-m-bottom_small">
+            <lightning-input type="text" variant="standard" name="Search" label="Search" placeholder="type here..."
+                class="slds-m-bottom_small" onchange={handleSearch}></lightning-input>
+        </div>
+        <template if:true={hasAccounts}>
+            <lightning-datatable key-field="Id" data={accounts} columns={columns} hide-checkbox-column="true"
+                show-row-number-column="true"></lightning-datatable>
+            <div class="slds-m-top_small clear-fix">
+                <lightning-button variant="brand" icon-name="utility:arrow_left" alternative-text="Previous"
+                    onclick={handlePrevious} class="slds-float_left" label="Previous"></lightning-button>
+                <lightning-button variant="brand" icon-name="utility:arrow_right" alternative-text="Next"
+                    onclick={handleNext} class="slds-float_right" label="Next"></lightning-button>
+            </div>
+        </template>
+        <template if:false={hasAccounts}>
+            <div class="slds-align_absolute-center slds-m-top_medium">
+                <p>No accounts found.</p>
+            </div>
+        </template>
+        <template if:true={hasError}>
+            <p class="slds-text-color_error">{error}</p>
+        </template>
+    </lightning-card>
+</template>
